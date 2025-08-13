@@ -8,3 +8,6 @@ Accept: application/json
     "firstName": "John",
     "lastName": "Doe"
 }
+
+###
+GET {{base_address}}
