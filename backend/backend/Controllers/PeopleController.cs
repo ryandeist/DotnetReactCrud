@@ -5,16 +5,16 @@ namespace backend.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class PersonController : ControllerBase
+public class PeopleController : ControllerBase
 {
     private readonly AppDbContext _context;
 
-    public PersonController(AppDbContext context)
+    public PeopleController(AppDbContext context)
     {
         _context = context;
     }
 
-    [HttpPost]
+    [HttpPost] // POST /api/people
     public async Task<IActionResult> AddPerson(Person person)
     {
         try
