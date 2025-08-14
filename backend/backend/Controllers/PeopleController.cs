@@ -1,4 +1,5 @@
 using backend.Models;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,7 +23,7 @@ public class PeopleController : ControllerBase
         {
             _context.People.Add(person);
             await _context.SaveChangesAsync();
-            return Ok(person); // return 200 status code with the created person object in the response body.
+            return CreatedAtRoute("GetPerson", new {id=person.PersonId}, person); // return 201 status + the location of the resource code with the created person object in the response body.
 
         }
         catch (Exception ex)
@@ -38,6 +39,25 @@ public class PeopleController : ControllerBase
         {
             var people = await _context.People.ToListAsync();
             return Ok(people); // return 200 status code with the list of people in the response body.
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message); // return 500 status code with the error message in the response body.
+        }
+    }
+
+    [HttpGet("{id:int}", Name = "GetPerson")] // GET /api/people/{id}
+    public async Task<IActionResult> GetPerson(int id)
+    {
+        try
+        {
+            var person = await _context.People.FindAsync(id);
+
+            if (person is null)
+            {
+                return NotFound(); // return 404 status code if the person with the given id is not found.
+            }
+            return Ok(person); // return 200 status code with the list of people in the response body.
         }
         catch (Exception ex)
         {

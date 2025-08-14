@@ -5,9 +5,12 @@ Content-Type: application/json
 Accept: application/json
 
 {
-    "firstName": "John",
-    "lastName": "Doe"
+    "firstName": "Julia",
+    "lastName": "Berrebi"
 }
 
 ###
 GET {{base_address}}
+
+###
+GET {{base_address}}/2
