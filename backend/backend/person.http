@@ -5,26 +5,26 @@ Content-Type: application/json
 Accept: application/json
 
 {
-    "firstName": "Julia",
-    "lastName": "Berrebi"
+    "firstName": "Victor",
+    "lastName": "Recabarren"
 }
 
 ###
 GET {{base_address}}
 
 ###
-GET {{base_address}}/3
+GET {{base_address}}/4
 
 ###
-PUT {{base_address}}/3
+PUT {{base_address}}/4
 Content-Type: application/json
 Accept: application/json
 
 {
-    "personId": 3,
-    "firstName": "Peach",
-    "lastName": "Berrebi"
+    "personId": 4,
+    "firstName": "Victor",
+    "lastName": "MR"
 }
 
 ###
-DELETE  {{base_address}}/3
+DELETE  {{base_address}}/4
