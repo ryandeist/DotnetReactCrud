@@ -25,3 +25,6 @@ Accept: application/json
     "firstName": "Peach",
     "lastName": "Berrebi"
 }
+
+###
+DELETE  {{base_address}}/3

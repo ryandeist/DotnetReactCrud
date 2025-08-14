@@ -66,7 +66,7 @@ public class PeopleController : ControllerBase
     }
 
     [HttpPut("{id:int}")] // PUT /api/people/{id}
-    public async Task<IActionResult> UpdatePerson(int id,[FromBody] Person person)
+    public async Task<IActionResult> UpdatePerson(int id, [FromBody] Person person)
     {
         try
         {
@@ -81,6 +81,29 @@ public class PeopleController : ControllerBase
             }
 
             _context.People.Update(person);
+            await _context.SaveChangesAsync();
+            return NoContent(); // return 204 status code with no content in the response body.
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message); // return 500 status code with the error message in the response body.
+        }
+    }
+
+
+    [HttpDelete("{id:int}")] // DEL /api/people/{id}
+    public async Task<IActionResult> DeletePerson(int id)
+    {
+        try
+        {
+            var person = await _context.People.FindAsync(id);
+
+            if (person is null)
+            {
+                return NotFound(); // return 404 status code if the person with the given id is not found.
+            }
+
+            _context.People.Remove(person);
             await _context.SaveChangesAsync();
             return NoContent(); // return 204 status code with no content in the response body.
         }
