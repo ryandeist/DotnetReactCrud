@@ -13,4 +13,15 @@ Accept: application/json
 GET {{base_address}}
 
 ###
-GET {{base_address}}/2
+GET {{base_address}}/3
+
+###
+PUT {{base_address}}/3
+Content-Type: application/json
+Accept: application/json
+
+{
+    "personId": 3,
+    "firstName": "Peach",
+    "lastName": "Berrebi"
+}
