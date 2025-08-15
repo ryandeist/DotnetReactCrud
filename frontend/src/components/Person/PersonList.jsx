@@ -1,6 +1,6 @@
 import { Edit, Trash2 } from 'lucide-react';
 
-const PersonList = () => {
+const PersonList = ({ people }) => {
     return (
         <div className="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden">
             <div className="overflow-x-auto">
@@ -19,14 +19,15 @@ const PersonList = () => {
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-100">
-                        <tr
+                        {people.map((person) => (
+                        <tr key={person.personId}
                             className="hover:bg-gray-50 transition-colors duration-150"
                         >
                             <td className="px-6 py-4 text-sm font-medium text-gray-900">
-                                FName
+                                {person.firstName}
                             </td>
                             <td className="px-6 py-4 text-sm font-medium text-gray-900">
-                                Lname
+                                {person.lastName}
                             </td>
 
                             <td className="px-6 py-4 text-center">
@@ -46,8 +47,9 @@ const PersonList = () => {
                                         Delete
                                     </button>
                                 </div>
-                            </td>
-                        </tr>
+                                </td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
 
