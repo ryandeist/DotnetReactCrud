@@ -1,10 +1,22 @@
 import { Save, RotateCcw } from 'lucide-react';
+import { useForm } from 'react-hook-form';
 
 const PersonForm = () => {
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm();
+
+    const onSubmit = (formData) => {
+        console.log(formData);
+    }
+
 
     return (
         <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-6" style={{ marginBottom: '5px' }}>
-            <div className="space-y-4">
+            <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
+                <input type="hidden" {...register('personId')} />
                 <div className="flex flex-col sm:flex-row gap-4">
                     <div className="flex-1">
                         <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-2">
@@ -12,11 +24,13 @@ const PersonForm = () => {
                         </label>
                         <input
                             type="text"
-                            className="w-full px-4 py-3 rounded-lg border transition-all duration-200 focus:outline-none focus:ring-2" placeholder="Enter first name"
+                            {...register('firstName', { required: true })}
+                            className="w-full px-4 py-3 rounded-lg border transition-all duration-200 focus:outline-none focus:ring-2" 
+                            placeholder="Enter first name"
                         />
 
                         <p className="mt-1 text-sm text-red-600 flex items-center">
-                            FirstName required
+                            First Name required
                         </p>
                     </div>
 
@@ -26,13 +40,12 @@ const PersonForm = () => {
                         </label>
                         <input
                             type="text"
-                            id="lastName"
-                            name="lastName"
-
-                            className="w-full px-4 py-3 rounded-lg border transition-all duration-200 focus:outline-none focus:ring-2" placeholder="Enter last name"
+                            {...register('lastName', { required: true })}
+                            className="w-full px-4 py-3 rounded-lg border transition-all duration-200 focus:outline-none focus:ring-2" 
+                            placeholder="Enter last name"
                         />
                         <p className="mt-1 text-sm text-red-600 flex items-center">
-                            LastName required
+                            Last Name required
                         </p>
                     </div>
                 </div>
@@ -54,7 +67,7 @@ const PersonForm = () => {
                         Reset
                     </button>
                 </div>
-            </div>
+            </form>
         </div>
     );
 };

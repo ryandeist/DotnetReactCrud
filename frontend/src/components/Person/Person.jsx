@@ -20,6 +20,15 @@ function Person() {
         },
     ]
 
+    const handleEditPerson = (personId) => {
+        console.log(`Editing person with ID: ${personId}`);
+    }
+
+    const handleDeletePerson = (personId) => {
+
+        console.log(`Deleting person with ID: ${personId}`);
+    }
+
     return (
         <div className="min-h-screen bg-gray-50 py-8">
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
@@ -31,7 +40,10 @@ function Person() {
                 </div>
 
                 <PersonForm />
-                <PersonList people={dummyPeople} />
+                <PersonList 
+                    people={dummyPeople} 
+                    handleEditPerson={handleEditPerson} 
+                    handleDeletePerson={handleDeletePerson} />
             </div>
         </div>
     )
