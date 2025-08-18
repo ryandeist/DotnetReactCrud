@@ -1,19 +1,14 @@
+// React
+import { useForm } from 'react-hook-form';
+import { useState, useEffect } from 'react';
+
+// Components
 import PersonForm from "./PersonForm"
 import PersonList from "./PersonList"
-import { useForm } from 'react-hook-form';
+
 
 function Person() {
-    const defaultFormData = {
-        personId: 0,
-        firstName: '',
-        lastName: '',
-    }
-
-    const methods = useForm({
-        defaultValues: defaultFormData,
-    });
-
-    const dummyPeople = [
+    const [dummyPeople, setDummyPeople] = useState([
         {
             personId: 1,
             firstName: 'John',
@@ -29,19 +24,48 @@ function Person() {
             firstName: 'Jim',
             lastName: 'Beam',
         },
-    ]
+    ]);
+
+    const [editPersonData, setEditPersonData] = useState(null);
+
+    useEffect(() => {
+        methods.reset(editPersonData);
+    }, [editPersonData])
+
+    const defaultFormData = {
+        personId: 0,
+        firstName: '',
+        lastName: '',
+    };
+
+    const methods = useForm({
+        defaultValues: defaultFormData,
+    });
+
     const handleSubmitPersonForm = (formData) => {
-        console.log(formData);
-    }
+        try {
+            if (formData.personId === 0) {
+                setDummyPeople([...dummyPeople, formData]);
+            } else {
+                setDummyPeople(dummyPeople.map(person => person.personId === formData.personId ? formData : person));
+            }
+            handleFormReset(defaultFormData);
+        } catch (error) {
+            console.error('Error submitting person form:', error);
+        }
+    };
 
-    const handleEditPerson = (personId) => {
-        console.log(`Editing person with ID: ${personId}`);
-    }
+    const handleEditPerson = (person) => {
+        setEditPersonData(person);
+    };
 
-    const handleDeletePerson = (personId) => {
-
-        console.log(`Deleting person with ID: ${personId}`);
-    }
+    const handleDeletePerson = (person) => {
+        try {
+            setDummyPeople(dummyPeople.filter(p => p.personId !== person.personId));
+        } catch (error) {
+            console.error('Error deleting person:', error);
+        }
+    };
 
     const handleFormReset = () => {
         methods.reset(defaultFormData);
@@ -57,14 +81,14 @@ function Person() {
 
                 </div>
 
-                <PersonForm 
-                    methods={methods} 
-                    formReset={handleFormReset} 
-                    formSubmit={handleSubmitPersonForm} 
+                <PersonForm
+                    methods={methods}
+                    formReset={handleFormReset}
+                    formSubmit={handleSubmitPersonForm}
                 />
-                <PersonList 
-                    people={dummyPeople} 
-                    handleEditPerson={handleEditPerson} 
+                <PersonList
+                    people={dummyPeople}
+                    handleEditPerson={handleEditPerson}
                     handleDeletePerson={handleDeletePerson} />
             </div>
         </div>

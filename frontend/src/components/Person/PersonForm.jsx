@@ -7,7 +7,7 @@ const PersonForm = ({ methods, formReset, formSubmit }) => {
         register,
         handleSubmit,
         formState: { errors },
-    } =methods;
+    } = methods;
 
     return (
         <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-6" style={{ marginBottom: '5px' }}>
