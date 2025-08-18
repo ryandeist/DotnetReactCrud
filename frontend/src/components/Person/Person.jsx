@@ -49,12 +49,14 @@ function Person() {
         defaultValues: defaultFormData,
     });
 
-    const handleSubmitPersonForm = (formData) => {
+    const handleSubmitPersonForm = async (formData) => {
         setIsLoading(true);
         try {
             if (formData.personId === 0) {
-                setPeople([...people, formData]);
+                const response = await axios.post(`${BASE_URL}/people`, formData);
+                setPeople([...people, response.data]);
             } else {
+                await axios.put(`${BASE_URL}/people/${formData.personId}`, formData);
                 setPeople(people.map(person => person.personId === formData.personId ? formData : person));
             }
             handleFormReset(defaultFormData);
