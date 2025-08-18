@@ -1,6 +1,7 @@
 // React
 import { useForm } from 'react-hook-form';
 import { useState, useEffect } from 'react';
+import toast from 'react-hot-toast';
 
 // Components
 import PersonForm from "./PersonForm"
@@ -50,8 +51,10 @@ function Person() {
                 setDummyPeople(dummyPeople.map(person => person.personId === formData.personId ? formData : person));
             }
             handleFormReset(defaultFormData);
+            toast.success('Person form submitted successfully');
         } catch (error) {
             console.error('Error submitting person form:', error);
+            toast.error('Error submitting person form');
         }
     };
 
@@ -62,8 +65,10 @@ function Person() {
     const handleDeletePerson = (person) => {
         try {
             setDummyPeople(dummyPeople.filter(p => p.personId !== person.personId));
+            toast.success('Person deleted successfully');
         } catch (error) {
             console.error('Error deleting person:', error);
+            toast.error('Error deleting person');
         }
     };
 

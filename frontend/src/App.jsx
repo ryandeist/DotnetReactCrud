@@ -1,5 +1,6 @@
 import React from 'react'
 import { Routes, Route } from 'react-router-dom'
+import { Toaster } from 'react-hot-toast'
 
 // components
 import Navbar from './components/NavBar'
@@ -18,6 +19,7 @@ const App = () => {
         <Route path='/person' element={<Person />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
+      <Toaster />
     </>
   )
 }
