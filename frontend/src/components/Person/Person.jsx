@@ -73,11 +73,12 @@ function Person() {
         setEditPersonData(person);
     };
 
-    const handleDeletePerson = (person) => {
+    const handleDeletePerson = async (person) => {
         if(!confirm(`Are you sure you want to delete ${person.firstName} ${person.lastName}?`)) return;
         setIsLoading(true);
 
         try {
+            await axios.delete(`${BASE_URL}/people/${person.personId}`);
             setPeople(people.filter(p => p.personId !== person.personId));
             toast.success('Person deleted successfully');
         } catch (error) {
