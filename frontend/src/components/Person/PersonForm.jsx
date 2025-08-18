@@ -1,20 +1,14 @@
 import { Save, RotateCcw } from 'lucide-react';
-import { useForm } from 'react-hook-form';
 
-const PersonForm = () => {
-    const defaultFormData = {
-        personId: 0,
-        firstName: '',
-        lastName: '',
-    }
+
+const PersonForm = ({methods}) => {
 
     const {
         register,
         handleSubmit,
         formState: { errors },
-    } = useForm({
-        defaultValues: defaultFormData,
-    });
+    } =methods;
+
 
     const onSubmit = (formData) => {
         console.log(formData);
