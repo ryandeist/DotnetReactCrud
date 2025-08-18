@@ -1,33 +1,39 @@
 // React
 import { useForm } from 'react-hook-form';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, use } from 'react';
 import toast from 'react-hot-toast';
 
 // Components
 import PersonForm from "./PersonForm"
 import PersonList from "./PersonList"
 
+// API
+import axios from 'axios';
+
 
 function Person() {
-    const [dummyPeople, setDummyPeople] = useState([
-        {
-            personId: 1,
-            firstName: 'John',
-            lastName: 'Doe',
-        },
-        {
-            personId: 2,
-            firstName: 'Jane',
-            lastName: 'Smith',
-        },
-        {
-            personId: 3,
-            firstName: 'Jim',
-            lastName: 'Beam',
-        },
-    ]);
-
+    const BASE_URL = import.meta.env.VITE_BASE_API_URL;
+    
+    const [people, setPeople] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
     const [editPersonData, setEditPersonData] = useState(null);
+
+    useEffect(() => {
+        
+        const fetchPeople = async () => {
+            try {
+                const response = await axios.get(`${BASE_URL}/people`);
+                setPeople(response.data);
+            } catch (error) {
+                console.error('Error fetching people:', error);
+                toast.error('Error fetching people');
+            } finally {
+                setIsLoading(false);
+            }
+        }
+
+        fetchPeople();
+    }, []);
 
     useEffect(() => {
         methods.reset(editPersonData);
@@ -46,9 +52,9 @@ function Person() {
     const handleSubmitPersonForm = (formData) => {
         try {
             if (formData.personId === 0) {
-                setDummyPeople([...dummyPeople, formData]);
+                setPeople([...people, formData]);
             } else {
-                setDummyPeople(dummyPeople.map(person => person.personId === formData.personId ? formData : person));
+                setPeople(people.map(person => person.personId === formData.personId ? formData : person));
             }
             handleFormReset(defaultFormData);
             toast.success('Person form submitted successfully');
@@ -64,7 +70,7 @@ function Person() {
 
     const handleDeletePerson = (person) => {
         try {
-            setDummyPeople(dummyPeople.filter(p => p.personId !== person.personId));
+            setPeople(people.filter(p => p.personId !== person.personId));
             toast.success('Person deleted successfully');
         } catch (error) {
             console.error('Error deleting person:', error);
@@ -92,7 +98,7 @@ function Person() {
                     formSubmit={handleSubmitPersonForm}
                 />
                 <PersonList
-                    people={dummyPeople}
+                    people={people}
                     handleEditPerson={handleEditPerson}
                     handleDeletePerson={handleDeletePerson} />
             </div>
