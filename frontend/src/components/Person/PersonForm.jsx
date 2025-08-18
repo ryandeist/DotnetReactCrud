@@ -1,7 +1,7 @@
 import { Save, RotateCcw } from 'lucide-react';
 
 
-const PersonForm = ({methods}) => {
+const PersonForm = ({ methods, formReset, formSubmit }) => {
 
     const {
         register,
@@ -9,15 +9,9 @@ const PersonForm = ({methods}) => {
         formState: { errors },
     } =methods;
 
-
-    const onSubmit = (formData) => {
-        console.log(formData);
-    }
-
-
     return (
         <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-6" style={{ marginBottom: '5px' }}>
-            <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
+            <form className="space-y-4" onSubmit={handleSubmit(formSubmit)}>
                 <input type="hidden" {...register('personId')} />
                 <div className="flex flex-col sm:flex-row gap-4">
                     <div className="flex-1">
@@ -81,6 +75,7 @@ const PersonForm = ({methods}) => {
                     </button>
 
                     <button
+                        onClick={formReset}
                         type="button"
                         className="flex items-center justify-center px-6 py-3 bg-gray-100 text-gray-700 font-medium rounded-lg hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-all duration-200 transform hover:scale-105"
                     >

@@ -30,6 +30,9 @@ function Person() {
             lastName: 'Beam',
         },
     ]
+    const handleSubmitPersonForm = (formData) => {
+        console.log(formData);
+    }
 
     const handleEditPerson = (personId) => {
         console.log(`Editing person with ID: ${personId}`);
@@ -38,6 +41,10 @@ function Person() {
     const handleDeletePerson = (personId) => {
 
         console.log(`Deleting person with ID: ${personId}`);
+    }
+
+    const handleFormReset = () => {
+        methods.reset(defaultFormData);
     }
 
     return (
@@ -50,7 +57,11 @@ function Person() {
 
                 </div>
 
-                <PersonForm methods={methods} />
+                <PersonForm 
+                    methods={methods} 
+                    formReset={handleFormReset} 
+                    formSubmit={handleSubmitPersonForm} 
+                />
                 <PersonList 
                     people={dummyPeople} 
                     handleEditPerson={handleEditPerson} 
